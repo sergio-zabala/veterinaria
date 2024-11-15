@@ -91,7 +91,6 @@ export class Veterinaria implements Gestion {
         }
     }
 
-
     public mostrarDetalleDireccion(): void {
         const datosDireccion: string[][] = [
             ['Campo', 'Valor'],
