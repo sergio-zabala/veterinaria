@@ -54,11 +54,13 @@ export class Veterinaria implements Gestion {
         console.log(`El cliente con el id ${nuevoCliente.getId_clientes()} se dio de alta.`);
     }
 
-    public modificar(idCliente: string, nombre: string, telefono: string): void {
+    public modificar(idCliente: string, nombre: string, telefono?: string): void {
         const modificarCliente: Cliente | undefined = this.clientes.find((id) => id.getId_clientes() === idCliente);
         if (!modificarCliente) return
         modificarCliente.setNombre(nombre);
-        modificarCliente.setTelefono(telefono);
+        if(telefono){
+            modificarCliente.setTelefono(telefono);
+        }
     }
 
     public baja(idCliente: string): void {
