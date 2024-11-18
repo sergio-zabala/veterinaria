@@ -31,6 +31,7 @@ export class Veterinaria implements Gestion {
     public setDireccion(direccion: Direccion): void {
         this.direccion = direccion;
     }
+    
 
     public getIdVeterinaria(): string | undefined {
         if (this.idVeterinaria) {
