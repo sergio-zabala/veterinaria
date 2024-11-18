@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "tsc src/main.ts --lib es2023,dom --outDir ./dist && node dist/main.js"
+    "dev": "ts-node src/main.ts"
   },
   "keywords": [],
   "author": "",

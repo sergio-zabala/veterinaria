@@ -4,12 +4,13 @@ import { Veterinaria } from "./poo/Veterinaria";
 const ids: string[] = [];
 
 const main = (): void => {
-    // instancia sucursal
-    const sucursalPatitasFelices: Veterinaria = new Veterinaria("Patitas Felices");
-    sucursalPatitasFelices.guardarId(ids); //generar id de sucursal
-
     // instanciar direccion
     const dirPatitasFelices: Direccion = new Direccion("Buenos Aires", "Olavarria", 7400, "Dean Funes", 2828);
+    // instancia sucursal
+    const sucursalPatitasFelices: Veterinaria = new Veterinaria("Patitas Felices",dirPatitasFelices);
+    sucursalPatitasFelices.guardarId(ids); //generar id de sucursal
+
+    
 
     //instanciar nuevo Cliente
     const cliente_1: Cliente = new Cliente("Gustavo", "23251212");
@@ -30,16 +31,26 @@ const main = (): void => {
     sucursalPatitasFelices.setCliente(cliente_3);
 
     // EJEMPLO DAR DE ALTA
-    sucursalPatitasFelices.alta(cliente_1.getId_clientes());
-    sucursalPatitasFelices.alta(cliente_2.getId_clientes());
-    sucursalPatitasFelices.alta(cliente_3.getId_clientes());
-
-
-    // EJEMPLO DAR DE BAJA
-    sucursalPatitasFelices.baja(cliente_1.getId_clientes());
+    sucursalPatitasFelices.alta(cliente_1.getId_cliente());
+    sucursalPatitasFelices.alta(cliente_2.getId_cliente());
+    sucursalPatitasFelices.alta(cliente_3.getId_cliente());
 
     // MOSTRAR TABLA
     sucursalPatitasFelices.mostrarTablaClientes();
+
+
+    // EJEMPLO DAR DE BAJA
+    sucursalPatitasFelices.baja(cliente_1.getId_cliente());
+
+    // EJEMPLO DE VISITAR.
+    cliente_2.visitar(6);
+    cliente_3.visitar(2);
+
+
+    // MOSTRAR TABLA
+    sucursalPatitasFelices.mostrarTablaClientes();
+
+
 }
 
 // EJECUCION DEL PROGRAMA PRINCIPAL

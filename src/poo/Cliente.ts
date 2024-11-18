@@ -1,4 +1,5 @@
-import { Gestion } from "./gestion";
+import { generarIdUnica } from "../funciones/generadorIds";
+import { Gestion } from "./Gestion";
 
 export class Cliente implements Gestion{
     //propiedades
@@ -7,18 +8,18 @@ export class Cliente implements Gestion{
     private telefono:string;
     private esVip:boolean;
     private visitas:number;
-    private id_clientes:string;
+    private id_cliente:string;
 
     
     
     //Constructor
     
-    constructor(nombre:string,telefono:string,esVip:boolean,visitas:number,id_clientes:string){
+    constructor(nombre:string,telefono:string){
         this.nombre=nombre;
         this.telefono=telefono;
-        this.esVip=esVip;
-        this.visitas=visitas;
-        this.id_clientes=id_clientes;
+        this.esVip=false;
+        this.visitas=0;
+        this.id_cliente="";
     }
 
 
@@ -38,7 +39,7 @@ export class Cliente implements Gestion{
         this.telefono = telefono;
     }
 
-    public isEsVip(): boolean {
+    public getEsVip(): boolean {
         return this.esVip;
     }
 
@@ -54,19 +55,43 @@ export class Cliente implements Gestion{
         this.visitas = visitas;
     }
 
-    public getId_clientes(): string {
-        return this.id_clientes;
+    public getId_cliente(): string {
+        return this.id_cliente;
     }
 
-    private setId_clientes(id_clientes: string): void {
-        this.id_clientes = id_clientes;
+    private setId_cliente(id_cliente: string): void {
+        this.id_cliente = id_cliente;
     }
 
  //metodos
 
- public guardarIds(ids:string[]):void{
-    this.setId_clientes(ids)
+ public guardarId(ids:string[]):void{
+    this.setId_cliente(generarIdUnica(ids));
+    console.log("ID de cliente guardado de forma exitosa."); 
  }
+
+    // Método para incrementar el número de visitas
+ private incrementarVisitas(): void {
+    this.visitas++;
+    // Si el cliente alcanza un numero de visitas 5 o mas, se convierte en VIP
+    if (this.visitas >= 5) {
+        this.esVip = true;
+    }
+ }
+
+ // Método para simular la visita de un cliente
+ public visitar(cantidadVisitas:number): void {
+     if (cantidadVisitas > 0) {
+         for (let i = 0; i < cantidadVisitas; i++) {
+             this.incrementarVisitas();
+             
+        }
+    }
+    
+    console.log(`${this.nombre} ha visitado. Visitas totales: ${this.visitas}`);
+ }
+
+
 //implementacion de interface Gestion
 
     alta(): void {
@@ -77,7 +102,7 @@ export class Cliente implements Gestion{
         
     }
 
-    modificar(): void {
+    modificar(id:string,nombre:string,telefono?:string): void {
         
     }
 }
