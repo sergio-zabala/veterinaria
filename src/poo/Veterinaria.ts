@@ -2,8 +2,8 @@
 import { table } from 'table';
 import { generarIdUnica } from "../funciones/generadorIds";
 import { Cliente } from "./Cliente";
-import { Direccion } from "./Direccion";
 import { Gestion } from "./Gestion";
+import { Direccion } from './Direccion';
 
 export class Veterinaria implements Gestion {
     private nombre: string
@@ -11,9 +11,11 @@ export class Veterinaria implements Gestion {
     private idVeterinaria: string
     private clientes: Cliente[];
 
-    constructor(nombre: string) {
+    constructor(nombre: string,direccion:Direccion) {
         this.nombre = nombre;
         this.clientes = [];
+        this.direccion = direccion;
+        this.idVeterinaria="";
     }
 
     private getNombre(): string {
@@ -50,13 +52,13 @@ export class Veterinaria implements Gestion {
 
     // IMPLEMENTACION DE METODOS DE INTERFACE GESTION
     public alta(idCliente: string): void {
-        const nuevoCliente: Cliente | undefined = this.clientes.find((id) => id.getId_clientes() === idCliente);        
+        const nuevoCliente: Cliente | undefined = this.clientes.find((id) => id.getId_cliente() === idCliente);        
         if (!nuevoCliente) return;
-        console.log(`El cliente con el id ${nuevoCliente.getId_clientes()} se dio de alta.`);
+        console.log(`El cliente con el id ${nuevoCliente.getId_cliente()} se dio de alta.`);
     }
 
     public modificar(idCliente: string, nombre: string, telefono?: string): void {
-        const modificarCliente: Cliente | undefined = this.clientes.find((id) => id.getId_clientes() === idCliente);
+        const modificarCliente: Cliente | undefined = this.clientes.find((id) => id.getId_cliente() === idCliente);
         if (!modificarCliente) return
         modificarCliente.setNombre(nombre);
         if(telefono){
@@ -65,7 +67,7 @@ export class Veterinaria implements Gestion {
     }
 
     public baja(idCliente: string): void {
-        const bajaCliente: Cliente[] | undefined = this.clientes.filter((id) => id.getId_clientes() !== idCliente);
+        const bajaCliente: Cliente[] | undefined = this.clientes.filter((id) => id.getId_cliente() !== idCliente);
         if (!bajaCliente) return;
         this.clientes = bajaCliente;
         console.log(`Se ha dado de baja a cliente con el id ${idCliente}`);
@@ -79,11 +81,11 @@ export class Veterinaria implements Gestion {
         if(this.clientes.length > 0){
             const cabecera: string[] = ['ID', 'Nombre', 'Tel', 'Visitas', 'Es Vip'];
             const datosCls: string[][] = this.clientes.map(cliente => [
-                cliente.getId_clientes(),
+                cliente.getId_cliente(),
                 cliente.getNombre(),
                 cliente.getTelefono(),
                 cliente.getVisitas().toString(),
-                cliente.isEsVip().toString()
+                cliente.getEsVip().toString()
             ]);
     
             // Incluir la cabecera en los datos de la tabla
