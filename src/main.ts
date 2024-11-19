@@ -6,10 +6,12 @@ const ids: string[] = [];
 const main = (): void => {
     // instanciar direccion
     const dirPatitasFelices: Direccion = new Direccion("Buenos Aires", "Olavarria", 7400, "Dean Funes", 2828);
+   dirPatitasFelices.setCalle("Sarmiento");
+   dirPatitasFelices.setNumero(2514);
     // instancia sucursal
     const sucursalPatitasFelices: Veterinaria = new Veterinaria("Patitas Felices",dirPatitasFelices);
     sucursalPatitasFelices.guardarId(ids); //generar id de sucursal
-
+    sucursalPatitasFelices.mostrarDetalleDireccion();
     
 
     //instanciar nuevo Cliente
