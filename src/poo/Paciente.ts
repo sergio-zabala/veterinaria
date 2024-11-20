@@ -1,4 +1,5 @@
 import { Cliente } from "./Cliente";
+
 export class Paciente{
     //Propiedades.
 
@@ -59,4 +60,5 @@ public getId_duenio(): string {
 public setId_duenio(id_duenio: string): void {
     this.id_duenio = id_duenio;
 }
+
 }
