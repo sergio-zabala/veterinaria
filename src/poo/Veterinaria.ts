@@ -4,18 +4,24 @@ import { generarIdUnica } from "../funciones/generadorIds";
 import { Cliente } from "./Cliente";
 import { Gestion } from "./Gestion";
 import { Direccion } from './Direccion';
+import { Proveedor } from './Proveedor';
+import { Paciente } from './Paciente';
 
 export class Veterinaria implements Gestion {
     private nombre: string
     private direccion: Direccion
     private idVeterinaria: string
     private clientes: Cliente[];
+    private proveedores: Proveedor[];
+    private pacientes: Paciente[];
 
     constructor(nombre: string,direccion:Direccion) {
         this.nombre = nombre;
         this.clientes = [];
         this.direccion = direccion;
         this.idVeterinaria="";
+        this.proveedores=[];
+        this.pacientes=[];
     }
 
     private getNombre(): string {
