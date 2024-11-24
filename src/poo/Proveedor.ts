@@ -1,63 +1,61 @@
-import { Gestion } from "./Gestion";
+import { generarIdUnica } from "../funcionesConsola/generadorIds";
 
-export class Proveedor implements Gestion{
-        //Propiedades
+export class Proveedor {
+    // Propiedades
+    private nombre: string;
+    private telefono: string;
+    private id_proveedor: string;
+    private id_sucursal: string;
 
-private nombre:string;
-private telefono:string;
-private id_proveedor:string;
+    // Constructor
+    constructor(nombre: string, telefono: string, id_sucursal: string) {
+        this.nombre = nombre;
+        this.telefono = telefono;
+        this.id_sucursal = id_sucursal;
+        this.id_proveedor = "";  //AL PRINCIPIO VACIO
+    }
 
+    //<----------------METODOS GETTER Y SETTER----------------------->
+    // OBTENER EL ID SUCURSAL
+    public getId_sucursal(): string {
+        return this.id_sucursal;
+    }
+    // MODIFICAR EL ID SUCURSAL
+    public setId_sucursal(id_sucursal: string): void {
+        this.id_sucursal = id_sucursal;
+    }
+    // OBTENER NOMBRE DE PROVEEDOR
+    public getNombre(): string {
+        return this.nombre;
+    }
+    // MODIFICAR EL NOMBRE DE PROVEEDOR
 
+    public setNombre(nombre: string): void {
+        this.nombre = nombre;
+    }
+    // OBTENER TELEFONO DE PROVEEDOR
 
-//Constructor.
+    public getTelefono(): string {
+        return this.telefono;
+    }
+    // MODIFICAR TELEFONO DE PROVEEDOR
+    public setTelefono(telefono: string): void {
+        this.telefono = telefono;
+    }
+    // OBTENER ID DE PROVEEDOR
+    public getId_proveedor(): string {
+        return this.id_proveedor;
+    }
+    // MODIFICAR ID DE PROVEEDOR
+    private setId_proveedor(id_proveedor: string): void {
+        this.id_proveedor = id_proveedor;
+    }
 
-constructor(nombre:string,telefono:string){
-    this.nombre=nombre;
-    this.telefono=telefono;
-    this.id_proveedor="";
-}
-
-
-public getNombre(): string {
-    return this.nombre;
-}
-
-public setNombre(nombre: string): void {
-    this.nombre = nombre;
-}
-
-public getTelefono(): string {
-    return this.telefono;
-}
-
-public setTelefono(telefono: string): void {
-    this.telefono = telefono;
-}
-
-public getId_proveedor(): string {
-    return this.id_proveedor;
-}
-
-private setId_proveedor(id_proveedor: string): void {
-    this.id_proveedor = id_proveedor;
-}
-
-public guardarIds(ids:string[]):void{
-    this.setId_proveedor(ids);
-    console.log("ID de proveedor guardado de forma exitosa."); 
-}
-
-//implementacion de interface Gestion
-
-alta(): void {
-        
-}
-
-baja(): void {
-    
-}
-
-modificar(id:string,nombre?:string,telefono?:string): void {
-    
-}
+    // METODO PARA GUARDAR EL ID DEL PROVEEEDOR
+    public guardarId(ids: string[]): void {
+        // SI EL ATRIBUTO ESTA VACIO O ES UNDEFINED
+        if (this.id_proveedor === "" || !this.id_proveedor) {
+            this.setId_proveedor(generarIdUnica(ids));
+        }
+    }
 }

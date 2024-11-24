@@ -1,62 +1,95 @@
 import { Cliente } from "./Cliente";
-export class Paciente{
-    //Propiedades.
+import pc from "picocolors";
 
-private nombre:string;
-private especie:string;
-private estadoSalud:string;
-private esExotica:boolean;
-private id_duenio:string;
+export class Paciente {
+    // VARIABLES O ATRIBUTOS
+    private nombre: string;
+    private especie: string;
+    private esExotica: boolean;
+    private cliente: Cliente;
+    private idPaciente: string;
+    private id_sucursal: string;
 
+    // CONSTRUCTOR
+    constructor(nombre: string, especie: string, cliente: Cliente) {
+        this.nombre = nombre;
+        this.especie = especie;
+        this.esExotica = false;
+        this.cliente = cliente;
+        this.idPaciente = cliente.getId_cliente();  //SE INICIALIZA CON EL ID DEL DUEÑO POR DEFECTO
+        this.id_sucursal = cliente.getId_sucursal(); //SE INICIALIZA CON EL ID DE SUCURSAL AL CUAL SE REGISTRA EL CLIENTE POR DEFECTO
+        this.validarSiesExotica(); // SE VALIDA SI ES EXOTICA O NO(SE LLAMA EN CUALQUIER CASO DE ACTUALIZAR)
+    }
 
+    //---------------------------------->GETTER Y SETTER<------------------------------------------//
 
-//Constructor.
+    // OBTENER SUCURSAL
+    public getId_sucursal(): string {
+        return this.id_sucursal;
+    }
 
-constructor(nombre:string,especie:string,estadoSalud:string,esExotica:boolean,id_cliente:string){
-    this.nombre=nombre;
-    this.especie=especie;
-    this.estadoSalud=estadoSalud;
-    this.esExotica=esExotica;
-    this.id_duenio=id_cliente;
-}
+    // SI EL CLIENTE CAMBIA DE SUCURSAL AL PACIENTE(MASCOTA)
+    public setId_sucursal(cliente: Cliente): void {
+        this.id_sucursal = cliente.getId_sucursal();
+    }
 
-public getNombre(): string {
-    return this.nombre;
-}
+    // OBTENER NOMBRE DE PACIENTE
+    public getNombre(): string {
+        return this.nombre;
+    }
 
-public setNombre(nombre: string): void {
-    this.nombre = nombre;
-}
+    // CAMBIAR NOMBRE DEL PACIENTE
+    public setNombre(nombre: string): void {
+        this.nombre = nombre;
+    }
 
-public getEspecie(): string {
-    return this.especie;
-}
+    // OBTENER TIPO ESPECIE DE PACIENTE
+    public getEspecie(): string {
+        return this.especie;
+    }
 
-public setEspecie(especie: string): void {
-    this.especie = especie;
-}
+    // MODIFICAR TIPO DE ESPECIE DE PACIENTE
+    public setEspecie(especie: string): void {
+        this.especie = especie;
+        this.validarSiesExotica(); //ACTUALIZA esExotica CUANDO SE ESTABLECE ESPECIE.
+    }
 
-public getEstadoSalud(): string {
-    return this.estadoSalud;
-}
+    // METODO PARA VER SI ES EXOTICA O NO
+    public getEsExotica(): string {
+        // USANDO OPERADOR TERNARIO SI ES TRUE SERA "SI" SINO "NO"
+        return this.esExotica ? pc.green("SI") : pc.red("NO");
+    }
 
-public setEstadoSalud(estadoSalud: string): void {
-    this.estadoSalud = estadoSalud;
-}
+    // MODIFICAR BOOLEANO
+    public setEsExotica(esExotica: boolean): void {
+        this.esExotica = esExotica;
+    }
 
-public getEsExotica(): boolean {
-    return this.esExotica;
-}
+    // OBTENER ID DE PACIENTE
+    public getIdPaciente(): string {
+        return this.idPaciente;
+    }
 
-public setEsExotica(esExotica: boolean): void {
-    this.esExotica = esExotica;
-}
+    // MODIFICAR ID DE PACIENTE
+    public setIdPaciente(cliente: Cliente): void {
+        this.idPaciente = cliente.getId_cliente();
+    }
 
-public getId_duenio(): string {
-    return this.id_duenio;
-}
+    // OBTENER EL CLIENTE DE ESTE PACIENTE
+    public getCliente(): Cliente {
+        return this.cliente;
+    }
 
-public setId_duenio(id_duenio: string): void {
-    this.id_duenio = id_duenio;
-}
+    // ACTUALIZAR ID PACIENTE
+    public setCliente(cliente: Cliente): void {
+        this.cliente = cliente;
+        this.idPaciente = cliente.getId_cliente();  // ACTUALIZAMOS ID PACIENTE CUANDO CAMBIAMOS DE CLIENTE
+    }
+
+    //---------------------------------->METODOS COMUNES<------------------------------------------//
+    public validarSiesExotica(): void {
+        const especiesComunes = ["gato", "perro"]; //ARREGLO DE ANIMALES
+        // GUARDA EN VARIABLE EL VALOR FALSE SOLO SI ES PERRO O GATO PARA EL RESTO SERA TRUE.
+        this.setEsExotica(!especiesComunes.includes(this.especie.toLowerCase()))
+    }
 }

@@ -1,108 +1,107 @@
-import { generarIdUnica } from "../funciones/generadorIds";
-import { Gestion } from "./Gestion";
+import { generarIdUnica } from "../funcionesConsola/generadorIds";
+import pc from "picocolors";
 
-export class Cliente implements Gestion{
-    //propiedades
+export class Cliente {
+    private nombre: string;
+    private telefono: string;
+    private esVip: boolean;
+    private visitas: number;
+    private id_cliente: string;
+    private id_sucursal: string;
 
-    private nombre:string;
-    private telefono:string;
-    private esVip:boolean;
-    private visitas:number;
-    private id_cliente:string;
-
-    
-    
-    //Constructor
-    
-    constructor(nombre:string,telefono:string){
-        this.nombre=nombre;
-        this.telefono=telefono;
-        this.esVip=false;
-        this.visitas=0;
-        this.id_cliente="";
+    constructor(nombre: string, telefono: string, id_sucursal: string) {
+        this.nombre = nombre;
+        this.telefono = telefono;
+        this.esVip = false;
+        this.visitas = 0;
+        this.id_cliente = "";
+        this.id_sucursal = id_sucursal;
+    }
+    // OBTENER ID SUCURSAL DEL CLIENTE
+    public getId_sucursal(): string {
+        return this.id_sucursal;
     }
 
+    // MODIFICAR ID SUCURSAL DEL CLIENTE
+    public setId_sucursal(id_sucursal: string): void {
+        this.id_sucursal = id_sucursal;
+    }
 
+    // OBTENER NOMBRE DE CLIENTE
     public getNombre(): string {
         return this.nombre;
     }
 
+    // MODIFICAR NOMBRE DE CLIENTE
     public setNombre(nombre: string): void {
         this.nombre = nombre;
     }
 
+    // OBTENER TELEFONO CLIENTE
     public getTelefono(): string {
         return this.telefono;
     }
 
+    // MODIFICAR TELEFONO CLIENTE
     public setTelefono(telefono: string): void {
         this.telefono = telefono;
     }
 
-    public getEsVip(): boolean {
-        return this.esVip;
+    // OBTENER SI ES VIP
+    public getEsVip(): string {
+        return this.esVip ? pc.green(pc.bold("SI")): pc.red(pc.bold("NO"));
     }
 
+    // MODIFICAR BOOLEANO SI ES VIP
     public setEsVip(esVip: boolean): void {
         this.esVip = esVip;
     }
 
+    // OBTENER VISITAS
     public getVisitas(): number {
         return this.visitas;
     }
 
+    // MODIFICAR VISITAS
     public setVisitas(visitas: number): void {
         this.visitas = visitas;
     }
 
+    // OBTENER ID CLIENTE
     public getId_cliente(): string {
         return this.id_cliente;
     }
 
+    // MODIFICAR ID CLIENTE
     private setId_cliente(id_cliente: string): void {
         this.id_cliente = id_cliente;
     }
 
- //metodos
-
- public guardarId(ids:string[]):void{
-    this.setId_cliente(generarIdUnica(ids));
-    console.log("ID de cliente guardado de forma exitosa."); 
- }
-
-    // Método para incrementar el número de visitas
- private incrementarVisitas(): void {
-    this.visitas++;
-    // Si el cliente alcanza un numero de visitas 5 o mas, se convierte en VIP
-    if (this.visitas >= 5) {
-        this.esVip = true;
+    // Método para guardar el ID único del cliente
+    public guardarId(ids: string[]): void {
+        this.setId_cliente(generarIdUnica(ids));
     }
- }
 
- // Método para simular la visita de un cliente
- public visitar(cantidadVisitas:number): void {
-     if (cantidadVisitas > 0) {
-         for (let i = 0; i < cantidadVisitas; i++) {
-             this.incrementarVisitas();
-             
+    // Método para incrementar las visitas
+    private actualizarVipStatus(): void {
+        this.esVip = this.visitas >= 5;
+    }
+
+    public incrementarVisitas(cantidad: number = 1): void {
+        if (cantidad <= 0) return;
+        this.visitas += cantidad;
+        this.actualizarVipStatus();
+    }
+
+    // METODO PARA LA SIMULACION DE VISITAS DEL CLIENTE
+    public visitar(cantidadVisitas: number): void {
+        if (cantidadVisitas <= 0) {
+            console.log(pc.magenta("La cantidad de visitas debe ser mayor que cero."));
+            return;
         }
-    }
-    
-    console.log(`${this.nombre} ha visitado. Visitas totales: ${this.visitas}`);
- }
 
-
-//implementacion de interface Gestion
-
-    alta(): void {
-        
-    }
-    
-    baja(): void {
-        
-    }
-
-    modificar(id:string,nombre:string,telefono?:string): void {
-        
+        for (let i = 0; i < cantidadVisitas; i++) {
+            this.incrementarVisitas();
+        }
     }
 }
