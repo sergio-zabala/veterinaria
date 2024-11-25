@@ -27,7 +27,8 @@ export const opcionesCliente: string[] = [
     pc.yellow("2. Modificar cliente de una sucursal"),
     pc.yellow("3. Registrar cliente en una sucursal"),
     pc.yellow("4. Mostrar clientes de una sucursal"),
-    pc.yellow("5. Menu principal"),
+    pc.yellow("5. Recibir nueva visita"),
+    pc.yellow("6. Menu principal"),
     pc.yellow("0. Salir")
 ];
 
@@ -39,7 +40,7 @@ export const opcionesProveedor: string[] = [
     pc.yellow("3. Registrar proveedor en una sucursal"),
     pc.yellow("4. Mostrar proveedores de una sucursal"),
     pc.yellow("5. Menu principal"),
-    pc.yellow("0. Salir"),
+    pc.yellow("0. Salir")
 ]
 
 // OPCIONES PARA MENU PACIENTE
@@ -49,7 +50,7 @@ export const opcionesPaciente: string[] = [
     pc.yellow("2. Modificar paciente de una sucursal"),
     pc.yellow("3. Mostrar pacientes de una sucursal"),
     pc.yellow("4. Menu principal"),
-    pc.yellow("0. Salir"),
+    pc.yellow("0. Salir")
 ]
 
 // FUNCION PARA MOSTRAR MENSAJE EN CONSOLA

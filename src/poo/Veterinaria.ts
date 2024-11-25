@@ -32,8 +32,10 @@ export class Veterinaria {
 
     //---------------------------------->GETTER Y SETTER<------------------------------------------//
     // OBTENER  NOMBRE NOMBRE CLIENTE
-    public getNombre(): string {
-        return this.nombre;
+    public getNombre(): string | undefined {
+        if (this.nombre) {
+            return this.nombre;
+        }
     }
 
     // MODIFICAR NOMBRE CLIENTE
@@ -41,16 +43,22 @@ export class Veterinaria {
         this.nombre = nombre;
     }
     // OBTENER TELEFONO DE CLIENTE
-    public getTelefono(): string {
-        return this.telefono;
+    public getTelefono(): string | null {
+        if (this.telefono) {
+            return this.telefono;
+        }
+        return null;
     }
     // MODIFICAR TELEFONO DE CLIENTE
     public setTelefono(telefono: string): void {
         this.telefono = telefono;
     }
     // OBTENER NOMBRE DE CALLE DE VETERINARIA
-    public getCalle(): string {
-        return this.calle;
+    public getCalle(): string | null {
+        if (this.calle) {
+            return this.calle;
+        }
+        return null;
     }
     // MODIFICAR NOMBRE DE CALLE DE VETERINARIA
 
@@ -59,8 +67,11 @@ export class Veterinaria {
     }
     // OBTENER NUMERO DE CALLE DE VETERINARIA
 
-    public getNumero(): number {
-        return this.numero;
+    public getNumero(): number | null {
+        if (this.numero) {
+            return this.numero;
+        }
+        return null;
     }
     // MODIFICAR NUMERO DE CALLE DE VETERINARIA
     public setNumero(numero: number): void {
@@ -94,7 +105,50 @@ export class Veterinaria {
         this.idVeterinaria = idVeterinaria;
     }
 
+    // OBTENER ARREGLO DE IDS DE CLIENTES
+    public getIdsClientes(): string[] | null {
+        // SI ES MAYOR A CERO MAPEAR
+        if (this.clientes.length > 0) {
+            // DEVUEVE UN NUEVO ARREGLO DE LOS ID REGISTRADOS
+            return this.clientes.map((cliente) => cliente.getId_cliente());
+        }
+        return null;
+    }
+    
+    // OBTENER ARREGLO DE IDS DE CLIENTES
+    public getIdsPacientes(): string[] | null {
+        // SI ES MAYOR A CERO MAPEAR
+        if (this.pacientes.length > 0) {
+            // DEVUEVE UN NUEVO ARREGLO DE LOS ID REGISTRADOS
+            return this.pacientes.map((paciente) => paciente.getIdPaciente());
+        }
+        return null;
+    }
+
+    // OBTENER ARREGLO DE IDS DE CLIENTES
+    public getIdsProveedores(): string[] | null {
+        // SI ES MAYOR A CERO MAPEAR
+        if (this.proveedores.length > 0) {
+            // DEVUEVE UN NUEVO ARREGLO DE LOS ID REGISTRADOS
+            return this.proveedores.map((proveedor) => proveedor.getId_proveedor());
+        }
+        return null;
+    }
+
     //---------------------------------->METODOS COMUNES<------------------------------------------//
+
+
+    // FUNCION PARA RECIBIR VISITA
+    public recibirVisitaClienteExistente(idCliente:string | undefined):void{
+        const visitaClienteExistente: Cliente | undefined = this.clientes.find((id) => id.getId_cliente() === idCliente);
+        if(!visitaClienteExistente){
+            console.log(pc.magenta(`El cliente con el id: ${idCliente} no esta registrado`));
+            return;
+        }
+        visitaClienteExistente.visitar();
+        console.log(pc.green(`El cliente con el id: ${idCliente}, a sumado una nueva visita.`));
+    }
+
 
     // ALTAS, BAJAS Y MODIFICACION DE CIENTE
     public altaCliente(cliente: Cliente): void {
@@ -113,9 +167,9 @@ export class Veterinaria {
         // MODIFICAR NOMBRE Y TEL
         modificarCliente.setNombre(nombre);
         modificarCliente.setTelefono(telefono);
-        modificarCliente.setTelefono(telefono);
         console.log(pc.green(`El cliente con id "${modificarCliente.getId_cliente()}" ha sido editado con exito!`));
     }
+
 
     // DAR DE DE BAJA CLIENTE
     public bajaCliente(idCliente: string): void {
@@ -149,6 +203,7 @@ export class Veterinaria {
         modificarProveedor.setTelefono(telefono);
         console.log(pc.green(`El proveedor con id "${modificarProveedor.getId_proveedor()}" ha sido editado con exito!`));
     }
+
     // DAR DE BAJA UN PROVEEDOR
     public bajaProveedor(idProveedor: string): void {
         const inicialLength = this.proveedores.length;
@@ -166,7 +221,7 @@ export class Veterinaria {
         console.log(pc.green(`El paciente "${paciente.getNombre()}" se dio de alta.`));
     }
 
-    public modificarPaciente(idPaciente: string, nombre: string): void {
+    public modificarPaciente(idPaciente: string, nombre: string, especie: string): void {
         const modificarPaciente: Paciente | undefined = this.pacientes.find((id) => id.getIdPaciente() === idPaciente);
 
         // SI NO ENCUENTRA EL ID DE PACIENTE
@@ -175,10 +230,24 @@ export class Veterinaria {
             return
         }
         modificarPaciente.setNombre(nombre);
+        modificarPaciente.setEspecie(especie);
         console.log(pc.green(`El paciente con el id "${modificarPaciente.getIdPaciente()}" ha sido editado con exito!`));
     }
 
+    // DAR DE BAJA UN PROVEEDOR
+    public bajaPaciente(idPaciente: string): void {
+        const inicialLength = this.pacientes.length;
+        // GUARAR EN PACIENTES EL NUEVO ARRAY DISCRIMINANDO EL OBJETO CON EL ID QUE LE PASAMOS.
+        this.pacientes = this.pacientes.filter((id) => id.getIdPaciente() !== idPaciente);
+        if (this.pacientes.length === inicialLength) {
+            console.log(pc.magenta(`IMPOSIBLE ELIMINAR: El paciente con el id "${idPaciente}" no existe`));
+            return
+        };
+        console.log(pc.yellow(`Se ha dado de baja al paciente con el id "${idPaciente}"`));
+    }
 
+
+    // GUARDAR ID A NUEVA SUCURSAL
     public guardarId(ids: string[]): void {
         // SI EL ATRIBUTO ESTA VACIO O ES UNDEFINED
         if (this.idVeterinaria === "" || !this.idVeterinaria) {
@@ -200,8 +269,10 @@ export class Veterinaria {
     public mostrarTablaClientes(): void {
         // SI CLIENTES CONTIENE ELEMENTOS
         if (this.clientes.length > 0) {
-            const cabecera: string[] = [pc.bold("Nombre"), pc.bold("Teléfono"), pc.bold("Visitas"), pc.bold("VIP")];
+            const cabecera: string[] = [pc.bold("ID"), pc.bold("id_sucursal"), pc.bold("Nombre"), pc.bold("Teléfono"), pc.bold("Visitas"), pc.bold("VIP")];
             const datosClientes: string[][] = this.clientes.map(cliente => [
+                pc.cyan(cliente.getId_cliente()),
+                pc.cyan(cliente.getId_sucursal()),
                 pc.cyan(cliente.getNombre()),
                 pc.cyan(cliente.getTelefono()),
                 pc.cyan(cliente.getVisitas().toString()),
@@ -211,16 +282,16 @@ export class Veterinaria {
             return;
         }
         console.log(pc.yellow("No hay clientes registrados en esta sucursal."));
-        return;
     }
 
     // MOSTRAR TABLAS PROVEEDORES
     public mostrarTablaProveedores(): void {
         // SI PROVEEDORES CONTIENE ELEMENTOS
         if (this.proveedores.length > 0) {
-            const cabecera: string[] = [pc.bold("ID"), pc.bold("Nombre"), pc.bold("Telefono")];
+            const cabecera: string[] = [pc.bold("ID"), pc.bold("id_sucursal"), pc.bold("Nombre"), pc.bold("Telefono")];
             const datosPdres: string[][] = this.proveedores.map(proveedor => [
                 pc.cyan(proveedor.getId_proveedor()),
+                pc.cyan(proveedor.getId_sucursal()),
                 pc.cyan(proveedor.getNombre()),
                 pc.cyan(proveedor.getTelefono())
             ]);
@@ -229,24 +300,25 @@ export class Veterinaria {
             return;
         }
         console.log(pc.yellow("No hay proveedores registrados en esta sucursal."));
-        return;
     }
 
     // MOSTRAR TABLA PACIENTES
     public mostrarTablaPacientes(): void {
         // SI PACIENTES CONTIENE ELEMENTOS
         if (this.pacientes.length > 0) {
-            const cabecera: string[] = [pc.bold("ID"), pc.bold("Nombre"), pc.bold("Especie"), pc.bold("Es exotico")];
+            const cabecera: string[] = [pc.bold("ID"), pc.bold("id_sucursal"), pc.bold("id_duenio"), pc.bold("Nombre"), pc.bold("Especie"), pc.bold("Es exotico")];
             const datosPtes: string[][] = this.pacientes.map(paciente => [
                 pc.cyan(paciente.getIdPaciente()),
+                pc.cyan(paciente.getId_sucursal()),
+                pc.cyan(paciente.getIdDuenio()),
                 pc.cyan(paciente.getNombre()),
                 pc.cyan(paciente.getEspecie()),
                 paciente.getEsExotica()
             ]);
 
             this.mostrarTabla(cabecera, datosPtes);
+            return;
         }
         console.log(pc.yellow("No hay pacientes registrados en esta sucursal."));
-        return;
     }
 }

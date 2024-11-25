@@ -1,3 +1,4 @@
+import { generarIdUnica } from "../funcionesConsola/generadorIds";
 import { Cliente } from "./Cliente";
 import pc from "picocolors";
 
@@ -8,6 +9,7 @@ export class Paciente {
     private esExotica: boolean;
     private cliente: Cliente;
     private idPaciente: string;
+    private idDuenio:string;
     private id_sucursal: string;
 
     // CONSTRUCTOR
@@ -16,7 +18,8 @@ export class Paciente {
         this.especie = especie;
         this.esExotica = false;
         this.cliente = cliente;
-        this.idPaciente = cliente.getId_cliente();  //SE INICIALIZA CON EL ID DEL DUEÑO POR DEFECTO
+        this.idPaciente="";
+        this.idDuenio = cliente.getId_cliente();  //SE INICIALIZA CON EL ID DEL DUEÑO POR DEFECTO
         this.id_sucursal = cliente.getId_sucursal(); //SE INICIALIZA CON EL ID DE SUCURSAL AL CUAL SE REGISTRA EL CLIENTE POR DEFECTO
         this.validarSiesExotica(); // SE VALIDA SI ES EXOTICA O NO(SE LLAMA EN CUALQUIER CASO DE ACTUALIZAR)
     }
@@ -66,13 +69,21 @@ export class Paciente {
     }
 
     // OBTENER ID DE PACIENTE
+    public getIdDuenio(): string {
+        return this.idDuenio;
+    }
+
+    // MODIFICAR ID DE PACIENTE
+    public setIdDuenio(cliente: Cliente): void {
+        this.idDuenio = cliente.getId_cliente();
+    }
+
     public getIdPaciente(): string {
         return this.idPaciente;
     }
 
-    // MODIFICAR ID DE PACIENTE
-    public setIdPaciente(cliente: Cliente): void {
-        this.idPaciente = cliente.getId_cliente();
+    public setIdPaciente(idPaciente: string): void {
+        this.idPaciente = idPaciente;
     }
 
     // OBTENER EL CLIENTE DE ESTE PACIENTE
@@ -91,5 +102,11 @@ export class Paciente {
         const especiesComunes = ["gato", "perro"]; //ARREGLO DE ANIMALES
         // GUARDA EN VARIABLE EL VALOR FALSE SOLO SI ES PERRO O GATO PARA EL RESTO SERA TRUE.
         this.setEsExotica(!especiesComunes.includes(this.especie.toLowerCase()))
+    }
+
+    public guardarId(ids:string[]):void{
+        if(this.getIdPaciente() === "" || !this.getIdPaciente()){
+            this.setIdPaciente(generarIdUnica(ids));
+        }
     }
 }

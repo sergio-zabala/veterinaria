@@ -54,8 +54,9 @@ export class Proveedor {
     // METODO PARA GUARDAR EL ID DEL PROVEEEDOR
     public guardarId(ids: string[]): void {
         // SI EL ATRIBUTO ESTA VACIO O ES UNDEFINED
-        if (this.id_proveedor === "" || !this.id_proveedor) {
+        if (this.getId_proveedor() === "" || !this.getId_proveedor()) {
             this.setId_proveedor(generarIdUnica(ids));
+            return;
         }
     }
 }

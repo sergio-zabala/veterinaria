@@ -1,5 +1,6 @@
 import { generarIdUnica } from "../funcionesConsola/generadorIds";
 import pc from "picocolors";
+import { Paciente } from "./Paciente";
 
 export class Cliente {
     private nombre: string;
@@ -8,6 +9,7 @@ export class Cliente {
     private visitas: number;
     private id_cliente: string;
     private id_sucursal: string;
+    private pacientes:Paciente[];
 
     constructor(nombre: string, telefono: string, id_sucursal: string) {
         this.nombre = nombre;
@@ -16,6 +18,7 @@ export class Cliente {
         this.visitas = 0;
         this.id_cliente = "";
         this.id_sucursal = id_sucursal;
+        this.pacientes =[];
     }
     // OBTENER ID SUCURSAL DEL CLIENTE
     public getId_sucursal(): string {
@@ -77,31 +80,35 @@ export class Cliente {
         this.id_cliente = id_cliente;
     }
 
-    // Método para guardar el ID único del cliente
-    public guardarId(ids: string[]): void {
-        this.setId_cliente(generarIdUnica(ids));
+    // VER LISTA DE PACIENTES DE UN CLIENTE
+    public getPacientes(): Paciente[] {
+        return this.pacientes;
     }
 
-    // Método para incrementar las visitas
+    // MODIFICAR LISTA DE PACIENTES DE UN CLIENTE
+    public setPacientes(paciente: Paciente): void {
+        this.pacientes.push(paciente);
+    }
+
+    // METODO PARA GUARDAR EL ID UNICO
+    public guardarId(ids: string[]): void {
+        if(this.getId_cliente() === "" || !this.getId_cliente()){
+            this.setId_cliente(generarIdUnica(ids));
+        }
+    }
+
+    // METODO PARA INCREMENTAR LAS VISITAS
     private actualizarVipStatus(): void {
         this.esVip = this.visitas >= 5;
     }
 
-    public incrementarVisitas(cantidad: number = 1): void {
-        if (cantidad <= 0) return;
-        this.visitas += cantidad;
+    public incrementarVisitas(): void {
+        this.visitas += 1;
         this.actualizarVipStatus();
     }
 
     // METODO PARA LA SIMULACION DE VISITAS DEL CLIENTE
-    public visitar(cantidadVisitas: number): void {
-        if (cantidadVisitas <= 0) {
-            console.log(pc.magenta("La cantidad de visitas debe ser mayor que cero."));
-            return;
-        }
-
-        for (let i = 0; i < cantidadVisitas; i++) {
-            this.incrementarVisitas();
-        }
+    public visitar(): void {
+        this.incrementarVisitas();
     }
 }
