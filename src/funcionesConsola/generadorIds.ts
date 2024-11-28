@@ -1,8 +1,7 @@
 // ALMACENAMIENTO DE CARACTERES
-let caracteresMinus:string = "abcdefghijklmnñopqrstuvwxyz";
+let caracteresMinus:string = "abcdefghijklmnopqrstuvwxyz";
 const caracteresMayus:string = caracteresMinus.toUpperCase();
 const numeros: string= "0123456789";
-const caracteresEspeciales:string = "!#$%&/=?¡-_.;,+*()";
 
 // FUNCION QUE SE ENCARGA DE GENERAR EL ID Y VALIDAR SI EXISTE EN ARREGLO. RETORNA EL ID.
 export function generarIdUnica(ids:string[]):string {
@@ -10,7 +9,7 @@ export function generarIdUnica(ids:string[]):string {
     let id: string= ""; // ID VACIO QUE GUARDARA EL ID GENERADO.
 
     // CONCATENAR TODAS LAS VARIABLES DE STRINGS
-    const caracteres:string = `${caracteresMinus}${caracteresMayus}${numeros}${caracteresEspeciales}`; //LONGITUD 83
+    const caracteres:string = `${caracteresMinus}${caracteresMayus}${numeros}`; //LONGITUD 83
     
     // BUCLE QUE ITERA 10 VECES
     for (let i = 1; i < longitud; i++) {

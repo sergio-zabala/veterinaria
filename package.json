@@ -10,10 +10,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "picocolors": "^1.1.1",
     "readline-sync": "^1.4.10",
     "table": "^6.8.2"
   },
   "devDependencies": {
+    "@types/readline-sync": "^1.4.8",
     "@types/table": "^6.3.2"
   }
 }
