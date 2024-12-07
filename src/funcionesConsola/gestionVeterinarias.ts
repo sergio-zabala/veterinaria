@@ -1,6 +1,6 @@
 import pc from "picocolors";
 import { Veterinaria } from "../poo/Veterinaria";
-import { obtenerDato } from "./readlineSync";
+import { obtenerDato, obtenerDatoNumerico } from "./readlineSync";
 
 // FUNCION PARA PEDIR EL ID DE CLIENTE DESDE CONSOLA
 export function pedirIdCliente(veterinaria: Veterinaria): string | null {
@@ -26,16 +26,16 @@ export function pedirIdCliente(veterinaria: Veterinaria): string | null {
 
 
 // FUNCION PARA PEDIR EL ID DE PACIENTE DESDE CONSOLA
-export function pedirIdPaciente(veterinaria: Veterinaria): string | null {
+export function pedirIdPaciente(veterinaria: Veterinaria): number | null {
     // LISTA DE IDENTIFICADORES DE  PACIENTES
-    const idsPacientes: string[] | null = veterinaria.getIdsPacientes();
+    const idsPacientes: number[] | null = veterinaria.getIdsPacientes();
     // SI ID PACIENTES ES INDEFINIDO O ARREGLO VACIO
     if (!idsPacientes || idsPacientes.length === 0) {
         console.log(pc.yellow("No hay Pacientes registrados."));
         return null;
     }
     // PEDIR ID DE PACIENTE AL USUARIO
-    const idSeleccionado: string = obtenerDato(pc.bold("Ingrese el ID del paciente: "));
+    const idSeleccionado: number = obtenerDatoNumerico(pc.bold("Ingrese el ID del paciente: "));
 
     // SI EL ID INGRESADO POR EL USUARIO ESTA INCLUIDO EN EL ARREGLO DE ID DE PACIENTES.
     if (idsPacientes.includes(idSeleccionado)) {

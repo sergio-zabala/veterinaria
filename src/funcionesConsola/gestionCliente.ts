@@ -1,6 +1,5 @@
 import { Cliente } from "../poo/Cliente";
 import { CentralVeterinaria } from "../poo/RedVeterinaria";
-import { Veterinaria } from "../poo/Veterinaria";
 import { registrarPaciente } from "./gestionPaciente";
 import { seleccionarSucursal } from "./gestionRed";
 import { pedirIdCliente } from "./gestionVeterinarias";
@@ -38,7 +37,7 @@ export function registrarCliente(centralVeterinaria: CentralVeterinaria, ids: st
         cliente.guardarId(ids);
         cliente.visitar();
         sucursal.altaCliente(cliente);
-        registrarPaciente(centralVeterinaria, cliente, ids);
+        registrarPaciente(centralVeterinaria, cliente);
     }
 }
 
