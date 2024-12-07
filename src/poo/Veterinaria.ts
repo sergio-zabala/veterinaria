@@ -115,8 +115,8 @@ export class Veterinaria {
         return null;
     }
     
-    // OBTENER ARREGLO DE IDS DE CLIENTES
-    public getIdsPacientes(): string[] | null {
+    // // OBTENER ARREGLO DE IDS DE PACIENTES
+    public getIdsPacientes(): number[] | null {
         // SI ES MAYOR A CERO MAPEAR
         if (this.pacientes.length > 0) {
             // DEVUEVE UN NUEVO ARREGLO DE LOS ID REGISTRADOS
@@ -221,7 +221,7 @@ export class Veterinaria {
         console.log(pc.green(`El paciente "${paciente.getNombre()}" se dio de alta.`));
     }
 
-    public modificarPaciente(idPaciente: string, nombre: string, especie: string): void {
+    public modificarPaciente(idPaciente: number, nombre: string, especie: string): void {
         const modificarPaciente: Paciente | undefined = this.pacientes.find((id) => id.getIdPaciente() === idPaciente);
 
         // SI NO ENCUENTRA EL ID DE PACIENTE
@@ -235,7 +235,7 @@ export class Veterinaria {
     }
 
     // DAR DE BAJA UN PROVEEDOR
-    public bajaPaciente(idPaciente: string): void {
+    public bajaPaciente(idPaciente: number): void {
         const inicialLength = this.pacientes.length;
         // GUARAR EN PACIENTES EL NUEVO ARRAY DISCRIMINANDO EL OBJETO CON EL ID QUE LE PASAMOS.
         this.pacientes = this.pacientes.filter((id) => id.getIdPaciente() !== idPaciente);
@@ -306,9 +306,9 @@ export class Veterinaria {
     public mostrarTablaPacientes(): void {
         // SI PACIENTES CONTIENE ELEMENTOS
         if (this.pacientes.length > 0) {
-            const cabecera: string[] = [pc.bold("ID"), pc.bold("id_sucursal"), pc.bold("id_duenio"), pc.bold("Nombre"), pc.bold("Especie"), pc.bold("Es exotico")];
+            const cabecera: string[] = [pc.bold("Nro. Registro"), pc.bold("id_sucursal"), pc.bold("id_duenio"), pc.bold("Nombre"), pc.bold("Especie"), pc.bold("Es exotico")];
             const datosPtes: string[][] = this.pacientes.map(paciente => [
-                pc.cyan(paciente.getIdPaciente()),
+                pc.cyan(paciente.getIdPaciente().toString()),
                 pc.cyan(paciente.getId_sucursal()),
                 pc.cyan(paciente.getIdDuenio()),
                 pc.cyan(paciente.getNombre()),

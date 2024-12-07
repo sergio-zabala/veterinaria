@@ -8,8 +8,8 @@ export class Paciente {
     private especie: string;
     private esExotica: boolean;
     private cliente: Cliente;
-    private idPaciente: string;
-    private idDuenio:string;
+    private idPaciente: number;
+    private idDuenio: string;
     private id_sucursal: string;
 
     // CONSTRUCTOR
@@ -18,7 +18,7 @@ export class Paciente {
         this.especie = especie;
         this.esExotica = false;
         this.cliente = cliente;
-        this.idPaciente="";
+        this.idPaciente = 0;
         this.idDuenio = cliente.getId_cliente();  //SE INICIALIZA CON EL ID DEL DUEÑO POR DEFECTO
         this.id_sucursal = cliente.getId_sucursal(); //SE INICIALIZA CON EL ID DE SUCURSAL AL CUAL SE REGISTRA EL CLIENTE POR DEFECTO
         this.validarSiesExotica(); // SE VALIDA SI ES EXOTICA O NO(SE LLAMA EN CUALQUIER CASO DE ACTUALIZAR)
@@ -78,11 +78,11 @@ export class Paciente {
         this.idDuenio = cliente.getId_cliente();
     }
 
-    public getIdPaciente(): string {
+    public getIdPaciente(): number {
         return this.idPaciente;
     }
 
-    public setIdPaciente(idPaciente: string): void {
+    public setIdPaciente(idPaciente:number){
         this.idPaciente = idPaciente;
     }
 
@@ -94,7 +94,7 @@ export class Paciente {
     // ACTUALIZAR ID PACIENTE
     public setCliente(cliente: Cliente): void {
         this.cliente = cliente;
-        this.idPaciente = cliente.getId_cliente();  // ACTUALIZAMOS ID PACIENTE CUANDO CAMBIAMOS DE CLIENTE
+        this.idDuenio = cliente.getId_cliente();  // ACTUALIZAMOS ID PACIENTE CUANDO CAMBIAMOS DE CLIENTE
     }
 
     //---------------------------------->METODOS COMUNES<------------------------------------------//
@@ -104,9 +104,13 @@ export class Paciente {
         this.setEsExotica(!especiesComunes.includes(this.especie.toLowerCase()))
     }
 
-    public guardarId(ids:string[]):void{
-        if(this.getIdPaciente() === "" || !this.getIdPaciente()){
-            this.setIdPaciente(generarIdUnica(ids));
-        }
-    }
+    // public incrementarRegistro(idPaciente: number): number[] {
+
+    // }
+
+    // public guardarId(ids:string[]):void{
+    //     if(this.getIdPaciente() === "" || !this.getIdPaciente()){
+    //         this.setIdPaciente(generarIdUnica(ids));
+    //     }
+    // }
 }
