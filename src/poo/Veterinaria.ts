@@ -65,8 +65,8 @@ export class Veterinaria {
     public setCalle(calle: string): void {
         this.calle = calle;
     }
+    
     // OBTENER NUMERO DE CALLE DE VETERINARIA
-
     public getNumero(): number | null {
         if (this.numero) {
             return this.numero;

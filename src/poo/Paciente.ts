@@ -4,6 +4,8 @@ import pc from "picocolors";
 
 export class Paciente {
     // VARIABLES O ATRIBUTOS
+    private static idContador:number=1
+
     private nombre: string;
     private especie: string;
     private esExotica: boolean;
@@ -18,7 +20,7 @@ export class Paciente {
         this.especie = especie;
         this.esExotica = false;
         this.cliente = cliente;
-        this.idPaciente = 0;
+        this.idPaciente = Paciente.idContador++;
         this.idDuenio = cliente.getId_cliente();  //SE INICIALIZA CON EL ID DEL DUEÑO POR DEFECTO
         this.id_sucursal = cliente.getId_sucursal(); //SE INICIALIZA CON EL ID DE SUCURSAL AL CUAL SE REGISTRA EL CLIENTE POR DEFECTO
         this.validarSiesExotica(); // SE VALIDA SI ES EXOTICA O NO(SE LLAMA EN CUALQUIER CASO DE ACTUALIZAR)
@@ -99,18 +101,8 @@ export class Paciente {
 
     //---------------------------------->METODOS COMUNES<------------------------------------------//
     public validarSiesExotica(): void {
-        const especiesComunes = ["gato", "perro"]; //ARREGLO DE ANIMALES
+        const especiesComunes = ["gato", "gata", "perro", "perra"]; //ARREGLO DE ANIMALES
         // GUARDA EN VARIABLE EL VALOR FALSE SOLO SI ES PERRO O GATO PARA EL RESTO SERA TRUE.
         this.setEsExotica(!especiesComunes.includes(this.especie.toLowerCase()))
     }
-
-    // public incrementarRegistro(idPaciente: number): number[] {
-
-    // }
-
-    // public guardarId(ids:string[]):void{
-    //     if(this.getIdPaciente() === "" || !this.getIdPaciente()){
-    //         this.setIdPaciente(generarIdUnica(ids));
-    //     }
-    // }
 }

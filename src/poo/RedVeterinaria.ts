@@ -1,7 +1,7 @@
 import { Veterinaria } from "./Veterinaria";
-import { BorderUserConfig, table } from "table";
+import { table } from "table";
 import pc from "picocolors"
-import { Cliente } from "./Cliente";
+
 
 export class CentralVeterinaria {
     private nombre: string;
@@ -32,11 +32,11 @@ export class CentralVeterinaria {
         this.telefono = telefono;
     }
 
-    public getVeterinarias(): Veterinaria[] {
+    public getSucursales(): Veterinaria[] {
         return this.veterinarias;
     }
 
-    public getIdsVeterinarias(): string[] | null {
+    public getIdsSucursales(): string[] | null {
         // SI ES MAYOR A CERO MAPEAR
         if (this.veterinarias.length > 0) {
             // DEVUEVE UN NUEVO ARREGLO DE LOS ID REGISTRADOS
