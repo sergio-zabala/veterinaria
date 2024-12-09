@@ -1,14 +1,22 @@
-import { CentralVeterinaria } from "../poo/RedVeterinaria";
+import { GestionCentral } from "../poo/crud/GestionCentral";
+import { GestionCliente } from "../poo/crud/GestionCliente";
+import { GestionPaciente } from "../poo/crud/GestionPaciente";
+import { GestionProveedor } from "../poo/crud/GestionProveedor";
+import { GestionVeterinaria } from "../poo/crud/GestionVeterinaria";
 import { mostrarMensajeConsola, opcionesCliente, opcionesPaciente, opcionesGestionRed, opcionesProveedor, opcionesTipoGestion } from "./configuracionOpciones";
-import { bajaCliente, modificarCliente, mostrarClientes, recibirVisitaSucursal, registrarCliente } from "./gestionCliente";
-import { bajaPaciente, modificarPaciente, mostrarPacientes } from "./gestionPaciente";
-import { bajaProveedor, modificarProveedor, mostrarProveedores, registrarProveedor } from "./gestionProveedor";
-import { bajaSucursal, modificarSucursal, mostrarSucursales, registrarSucursal } from "./gestionRed";
 import { obtenerDatoNumerico, salir, setSalir } from "./readlineSync";
 import pc from "picocolors";
 
+// INSTANCIAS
+const central:GestionCentral= new GestionCentral();
+const gestionVet:GestionVeterinaria=new GestionVeterinaria(central);
+const gestionPaciente:GestionPaciente=new GestionPaciente(central, gestionVet);
+const gestionCliente:GestionCliente= new GestionCliente(central, gestionVet, gestionPaciente);
+const gestionProveedor:GestionProveedor= new GestionProveedor(central, gestionVet);
+
+
 // VERIFICAR OPCIONES MENU PRINCIPAL
-export function menuRedPrincipal(centralVeterinaria: CentralVeterinaria, ids: string[]): void {
+export function menuRedPrincipal(ids: string[]): void {
     let opcion: number;
     do {
         mostrarMensajeConsola(opcionesGestionRed);
@@ -16,19 +24,19 @@ export function menuRedPrincipal(centralVeterinaria: CentralVeterinaria, ids: st
 
         switch (opcion) {
             case 1:
-                mostrarSucursales(centralVeterinaria);
+                central.mostrar();
                 break;
             case 2:
-                registrarSucursal(centralVeterinaria, ids);
+                central.registrar(ids);
                 break;
             case 3:
-                bajaSucursal(centralVeterinaria)
+                central.baja()
                 break;
             case 4:
-                modificarSucursal(centralVeterinaria);
+                central.modificar();
                 break;
             case 5:
-                verificarOpcionesTipoGestion(centralVeterinaria, ids)
+                verificarOpcionesTipoGestion(ids)
                 break;
             case 0:
                 setSalir(true);
@@ -42,7 +50,7 @@ export function menuRedPrincipal(centralVeterinaria: CentralVeterinaria, ids: st
 }
 
 // VERIFICAR ENTRADA DEL MENU DE OPCIONES DEL TIPO DE GESTION
-export function verificarOpcionesTipoGestion(centralVeterinaria: CentralVeterinaria, ids: string[]) {
+export function verificarOpcionesTipoGestion(ids: string[]) {
     let opcion: number;
     do {
         mostrarMensajeConsola(opcionesTipoGestion);
@@ -50,13 +58,13 @@ export function verificarOpcionesTipoGestion(centralVeterinaria: CentralVeterina
 
         switch (opcion) {
             case 1:
-                verificarOpcionesCliente(centralVeterinaria, ids)
+                verificarOpcionesCliente(ids)
                 return;
             case 2:
-                verificarOpcionesPaciente(centralVeterinaria, ids)
+                verificarOpcionesPaciente()
                 break;
             case 3:
-                verificarOpcionesProveedor(centralVeterinaria, ids);
+                verificarOpcionesProveedor(ids);
                 break;
             case 4:
                 return;
@@ -71,7 +79,7 @@ export function verificarOpcionesTipoGestion(centralVeterinaria: CentralVeterina
 }
 
 // VERIFICAR OPCIONES GESTION CLIENTE
-export function verificarOpcionesCliente(centralVeterinaria: CentralVeterinaria, ids: string[]): void {
+export function verificarOpcionesCliente(ids: string[]): void {
     let opcion: number;
     do {
         mostrarMensajeConsola(opcionesCliente);
@@ -79,19 +87,19 @@ export function verificarOpcionesCliente(centralVeterinaria: CentralVeterinaria,
 
         switch (opcion) {
             case 1:
-                bajaCliente(centralVeterinaria);
+                gestionCliente.baja();
                 break;
             case 2:
-                modificarCliente(centralVeterinaria);
+                gestionCliente.modificar();
                 break;
             case 3:
-                registrarCliente(centralVeterinaria, ids);
+                gestionCliente.registrar(ids);
                 break;
             case 4:
-                mostrarClientes(centralVeterinaria);
+                gestionCliente.mostrar();
                 break;
             case 5:
-                recibirVisitaSucursal(centralVeterinaria);
+                gestionVet.recibirVisitaSucursal();
                 break;
             case 6:
                 return;
@@ -106,7 +114,7 @@ export function verificarOpcionesCliente(centralVeterinaria: CentralVeterinaria,
 }
 
 // VERIFICAR OPCIONES GESTION PROVEEDOR
-export function verificarOpcionesProveedor(centralVeterinaria: CentralVeterinaria, ids: string[]): void {
+export function verificarOpcionesProveedor(ids: string[]): void {
     let opcion: number;
     do {
         mostrarMensajeConsola(opcionesProveedor);
@@ -114,16 +122,16 @@ export function verificarOpcionesProveedor(centralVeterinaria: CentralVeterinari
 
         switch (opcion) {
             case 1:
-                bajaProveedor(centralVeterinaria);
+                gestionProveedor.baja();
                 break;
             case 2:
-                modificarProveedor(centralVeterinaria);
+                gestionProveedor.modificar();
                 break;
             case 3:
-                registrarProveedor(centralVeterinaria, ids);
+                gestionProveedor.registrar(ids);
                 break;
             case 4:
-                mostrarProveedores(centralVeterinaria);
+                gestionProveedor.mostrar();
                 break;
             case 5:
                 return;
@@ -138,7 +146,7 @@ export function verificarOpcionesProveedor(centralVeterinaria: CentralVeterinari
 }
 
 // VERIFICAR OPCIONES GESTION PACIENTE
-export function verificarOpcionesPaciente(centralVeterinaria: CentralVeterinaria, ids: string[]): void {
+export function verificarOpcionesPaciente(): void {
     let opcion: number;
     do {
         mostrarMensajeConsola(opcionesPaciente);
@@ -146,13 +154,13 @@ export function verificarOpcionesPaciente(centralVeterinaria: CentralVeterinaria
 
         switch (opcion) {
             case 1:
-                bajaPaciente(centralVeterinaria);
+                gestionPaciente.baja();
                 break;
             case 2:
-                modificarPaciente(centralVeterinaria);
+                gestionPaciente.modificar();
                 break;
             case 3:
-                mostrarPacientes(centralVeterinaria);
+                gestionPaciente.mostrar();
                 break;
             case 4:
                 return;

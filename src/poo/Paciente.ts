@@ -1,11 +1,9 @@
-import { generarIdUnica } from "../funcionesConsola/generadorIds";
 import { Cliente } from "./Cliente";
 import pc from "picocolors";
 
 export class Paciente {
     // VARIABLES O ATRIBUTOS
-    private static idContador:number=1
-
+    private static idContador:number=1 //ATRIBUTO CONTADOR ESTATICO
     private nombre: string;
     private especie: string;
     private esExotica: boolean;
