@@ -12,7 +12,7 @@ export const opcionesGestionRed: string[] = [
 
 // OPCIONES PARA ELEGIR QUE GESTIONAR
 export const opcionesTipoGestion: string[] = [
-    pc.bold("\n--- Menu de Gestion---"),
+    pc.bold("\n--- Submenu ---"),
     pc.yellow("1. Clientes"),
     pc.yellow("2. Pacientes"),
     pc.yellow("3. Proveedores"),

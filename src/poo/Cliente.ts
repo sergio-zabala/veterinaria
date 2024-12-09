@@ -98,13 +98,13 @@ export class Cliente {
     }
 
     // METODO PARA INCREMENTAR LAS VISITAS
-    private actualizarVipStatus(): void {
+    private actualizarVipEstado(): void {
         this.esVip = this.visitas >= 5;
     }
 
     public incrementarVisitas(): void {
         this.visitas += 1;
-        this.actualizarVipStatus();
+        this.actualizarVipEstado();
     }
 
     // METODO PARA LA SIMULACION DE VISITAS DEL CLIENTE
