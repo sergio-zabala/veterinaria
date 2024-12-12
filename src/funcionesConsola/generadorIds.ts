@@ -5,7 +5,7 @@ const numeros: string= "0123456789";
 
 // FUNCION QUE SE ENCARGA DE GENERAR EL ID Y VALIDAR SI EXISTE EN ARREGLO. RETORNA EL ID.
 export function generarIdUnica(ids:string[]):string {
-    const longitud=10; //LONGITUD QUE TENDRA EL ID GENERADO
+    const longitud:number=10; //LONGITUD QUE TENDRA EL ID GENERADO
     let id: string= ""; // ID VACIO QUE GUARDARA EL ID GENERADO.
 
     // CONCATENAR TODAS LAS VARIABLES DE STRINGS

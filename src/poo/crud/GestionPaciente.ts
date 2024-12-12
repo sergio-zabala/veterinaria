@@ -40,7 +40,6 @@ export class GestionPaciente implements ICrud {
                     if (!regExpSoloLetras.test(nombre) || nombre == "") {
                         console.log(pc.red("Solo se admiten letras y los campos no deben estar vacios. Intente nuevamente."));
                     }
-                    console.log(pc.red("Solo se admiten letras y los campos no deben estar vacios. Intente nuevamente."));
                 } while (!regExpSoloLetras.test(nombre) || nombre == "")
 
                 let especie: string;
